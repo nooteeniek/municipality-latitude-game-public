@@ -217,8 +217,14 @@ function beginRound() {
   elements.judgement.textContent = "？";
   elements.message.textContent = "1つ目の市区町村を選んでください";
   elements.detail.hidden = true;
+  elements.prefecture.textContent = "";
+  elements.city.textContent = "";
+  elements.latitude.textContent = "";
+  elements.longitude.textContent = "";
   elements.southCount.hidden = true;
+  elements.southCount.textContent = "";
   elements.nextLevel.hidden = true;
+  elements.failureResult.hidden = true;
   renderStatus();
   renderChoices();
 }
