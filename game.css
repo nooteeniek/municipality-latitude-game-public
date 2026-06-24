@@ -342,28 +342,58 @@ dd { margin: 0; font-family: ui-monospace, Consolas, monospace; font-size: .78re
   main { gap: 12px; }
   .status-panel {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto 1fr 1fr;
     align-items: stretch;
-    gap: 12px;
-    padding: 14px;
+    gap: 8px;
+    padding: 10px;
   }
   .mode-picker { width: 100%; }
   .mode-picker, .new-game { grid-column: 1 / -1; }
   .mode-picker { display: grid; grid-template-columns: auto 1fr; }
   .mode-picker select { width: 100%; min-height: 44px; }
   .score, .round-rule, .selection-progress {
-    min-height: 48px;
-    padding: 8px;
+    min-height: 44px;
+    padding: 6px;
     background: #f3f0e7;
     border-radius: 4px;
   }
   .score { justify-content: center; }
-  .selection-progress { display: grid; place-items: center; text-align: center; }
-  .round-rule { text-align: center; }
-  .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-  .choice { min-height: 64px; padding: 9px 5px; font-size: .78rem; }
+  .score strong { font-size: 2rem; }
+  .selection-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .round-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .round-rule strong, .selection-progress strong { font-size: 1rem; }
+  .choices { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .choice {
+    min-width: 0;
+    min-height: 54px;
+    padding: 7px 3px;
+    overflow-wrap: anywhere;
+    font-size: clamp(.62rem, 2.8vw, .75rem);
+    line-height: 1.25;
+  }
   .choice.revealed { min-height: 128px; }
-  .choice-answer { font-size: .6rem; }
+  .choice-answer {
+    gap: 2px;
+    margin-top: 5px;
+    padding-top: 5px;
+    overflow-wrap: normal;
+    font-size: .54rem;
+  }
+  .choice-rank { font-size: .64rem; }
   .result-panel { align-items: flex-start; gap: 14px; padding: 14px; }
   .judgement { flex-basis: 58px; width: 58px; height: 58px; font-size: 2.2rem; }
   dl { display: grid; grid-template-columns: 1fr 1fr; }
@@ -379,6 +409,26 @@ dd { margin: 0; font-family: ui-monospace, Consolas, monospace; font-size: .78re
   }
   .failure-result button {
     width: 100%;
+  }
+}
+
+@media (max-width: 370px) {
+  .game-header, main, .game-footer {
+    width: min(100% - 16px, 1240px);
+  }
+  .status-panel {
+    grid-template-columns: 1fr 1fr;
+  }
+  .score {
+    grid-column: 1 / -1;
+    min-height: 38px;
+  }
+  .choices {
+    gap: 4px;
+  }
+  .choice {
+    min-height: 50px;
+    font-size: .6rem;
   }
 }
 
