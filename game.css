@@ -208,6 +208,10 @@ dd { margin: 0; font-family: ui-monospace, Consolas, monospace; font-size: .78re
   color: var(--orange);
   font-size: .72rem;
 }
+.choice-kana {
+  color: #7b857e;
+  font-size: .6rem;
+}
 .choice:hover:not(:disabled) {
   color: white;
   background: var(--green);
@@ -231,6 +235,9 @@ dd { margin: 0; font-family: ui-monospace, Consolas, monospace; font-size: .78re
 }
 .choice.selected .choice-rank {
   color: #ffd2c4;
+}
+.choice.selected .choice-kana {
+  color: #e1ebe5;
 }
 .choice.selected::after {
   content: attr(data-order);

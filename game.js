@@ -9,6 +9,12 @@ const HONSHU_PREFECTURES = new Set([
   "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "鳥取県",
   "島根県", "岡山県", "広島県", "山口県",
 ]);
+const KANTO_PREFECTURES = new Set([
+  "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県",
+]);
+const KINKI_PREFECTURES = new Set([
+  "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県",
+]);
 
 const elements = {
   choices: document.querySelector("#choices"),
@@ -55,8 +61,14 @@ function modeData() {
       return data.filter((item) => item.prefecture === "東京都");
     case "osaka":
       return data.filter((item) => item.prefecture === "大阪府");
+    case "kyoto":
+      return data.filter((item) => item.prefecture === "京都府");
     case "cities":
       return data.filter((item) => item.city.endsWith("市"));
+    case "kanto":
+      return data.filter((item) => KANTO_PREFECTURES.has(item.prefecture));
+    case "kinki":
+      return data.filter((item) => KINKI_PREFECTURES.has(item.prefecture));
     case "honshu":
       return data.filter((item) => HONSHU_PREFECTURES.has(item.prefecture));
     default:
@@ -131,13 +143,16 @@ function renderChoices() {
 
     const prefecture = document.createElement("span");
     prefecture.textContent = item.prefecture;
+    const kana = document.createElement("span");
+    kana.className = "choice-kana";
+    kana.textContent = item.kana || "";
     const coordinates = document.createElement("span");
     coordinates.textContent =
       `緯度 ${Number(item.latitude).toFixed(4)} / 経度 ${Number(item.longitude).toFixed(4)}`;
     const rank = document.createElement("strong");
     rank.className = "choice-rank";
 
-    answer.append(prefecture, coordinates, rank);
+    answer.append(prefecture, kana, coordinates, rank);
     button.append(city, answer);
     fragment.appendChild(button);
   });
