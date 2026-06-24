@@ -41,6 +41,7 @@ const elements = {
   southCount: document.querySelector("#south-count"),
   failureResult: document.querySelector("#failure-result"),
   failureLevel: document.querySelector("#failure-level"),
+  failureMode: document.querySelector("#failure-mode"),
   failureMessage: document.querySelector("#failure-message"),
   retryGame: document.querySelector("#retry-game"),
 };
@@ -53,6 +54,10 @@ let selected = [];
 let locked = false;
 let audioContext;
 let failureTimer;
+
+function currentModeName() {
+  return elements.mode.options[elements.mode.selectedIndex]?.textContent || "";
+}
 
 function modeData() {
   const data = window.MUNICIPALITIES_DATA;
@@ -243,6 +248,7 @@ function finishFailure(message, resultMessage) {
 
   failureTimer = window.setTimeout(() => {
     elements.failureLevel.textContent = level;
+    elements.failureMode.textContent = currentModeName();
     elements.failureMessage.textContent = resultMessage;
     elements.failureResult.hidden = false;
     elements.failureResult.scrollIntoView({

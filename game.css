@@ -285,6 +285,14 @@ dd { margin: 0; font-family: ui-monospace, Consolas, monospace; font-size: .78re
   font-weight: 900;
   letter-spacing: .16em;
 }
+.failure-mode {
+  margin-bottom: 7px !important;
+  color: #68736b;
+  font-size: .82rem;
+}
+.failure-mode strong {
+  color: var(--ink);
+}
 .failure-result button {
   min-height: 46px;
   padding: 11px 20px;
