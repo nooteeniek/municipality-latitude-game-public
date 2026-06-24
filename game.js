@@ -15,6 +15,16 @@ const KANTO_PREFECTURES = new Set([
 const KINKI_PREFECTURES = new Set([
   "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県",
 ]);
+const MODE_NAMES = {
+  tokyo: "東京都だけ",
+  osaka: "大阪府だけ",
+  kyoto: "京都府だけ",
+  cities: "市だけ",
+  kanto: "関東",
+  kinki: "近畿",
+  honshu: "本州だけ",
+  all: "全部入り",
+};
 
 const elements = {
   choices: document.querySelector("#choices"),
@@ -56,7 +66,7 @@ let audioContext;
 let failureTimer;
 
 function currentModeName() {
-  return elements.mode.options[elements.mode.selectedIndex]?.textContent || "";
+  return MODE_NAMES[elements.mode.value] || "不明";
 }
 
 function modeData() {
