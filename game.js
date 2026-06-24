@@ -32,6 +32,7 @@ const elements = {
   playAgain: document.querySelector("#play-again"),
   mode: document.querySelector("#game-mode"),
   nextLevel: document.querySelector("#next-level"),
+  southCount: document.querySelector("#south-count"),
   failureResult: document.querySelector("#failure-result"),
   failureLevel: document.querySelector("#failure-level"),
   failureMessage: document.querySelector("#failure-message"),
@@ -186,6 +187,7 @@ function beginRound() {
   elements.judgement.textContent = "？";
   elements.message.textContent = "1つ目の市区町村を選んでください";
   elements.detail.hidden = true;
+  elements.southCount.hidden = true;
   elements.nextLevel.hidden = true;
   renderStatus();
   renderChoices();
@@ -216,19 +218,17 @@ function finishSuccess() {
   elements.nextLevel.hidden = false;
 }
 
-function finishFailure(previous, current) {
+function finishFailure(message, resultMessage) {
   locked = true;
   playTone(false);
   revealAnswers();
   elements.panel.className = "result-panel wrong";
   elements.judgement.textContent = "×";
-  elements.message.textContent =
-    `${current.city}は、直前の${previous.city}より北にあります。カードで答え合わせできます`;
+  elements.message.textContent = `${message} カードで答え合わせできます`;
 
   failureTimer = window.setTimeout(() => {
     elements.failureLevel.textContent = level;
-    elements.failureMessage.textContent =
-      `レベル${level}の${selected.length}個目で順番が逆になりました。`;
+    elements.failureMessage.textContent = resultMessage;
     elements.failureResult.hidden = false;
     elements.failureResult.scrollIntoView({
       behavior: "smooth",
@@ -250,14 +250,36 @@ elements.choices.addEventListener("click", (event) => {
   showDetail(item);
   renderStatus();
 
+  const remainingRequired = requiredCount - selected.length;
+  const availableSouth = round.filter(
+    (candidate) =>
+      !selected.includes(candidate) &&
+      Number(candidate.latitude) <= Number(item.latitude),
+  ).length;
+  elements.southCount.hidden = false;
+  elements.southCount.textContent =
+    `この場所より南側に選べる候補：${availableSouth}個`;
+
   if (previous && Number(item.latitude) > Number(previous.latitude)) {
     button.classList.add("wrong");
-    finishFailure(previous, item);
+    finishFailure(
+      `${item.city}は、直前の${previous.city}より北にあります。`,
+      `レベル${level}の${selected.length}個目で順番が逆になりました。`,
+    );
     return;
   }
 
   if (selected.length === requiredCount) {
     finishSuccess();
+    return;
+  }
+
+  if (availableSouth < remainingRequired) {
+    button.classList.add("wrong");
+    finishFailure(
+      `残り${remainingRequired}個を選ぶ必要がありますが、南側の候補は${availableSouth}個しかありません。`,
+      `レベル${level}の${selected.length}個目で、必要な数を並べられなくなりました。`,
+    );
     return;
   }
 
