@@ -25,6 +25,10 @@ const MODE_NAMES = {
   honshu: "本州だけ",
   all: "全部入り",
 };
+const MODE_DESCRIPTIONS = {
+  kanto: "茨城県・栃木県・群馬県・埼玉県・千葉県・東京都・神奈川県",
+  kinki: "三重県・滋賀県・京都府・大阪府・兵庫県・奈良県・和歌山県",
+};
 
 const elements = {
   choices: document.querySelector("#choices"),
@@ -47,11 +51,13 @@ const elements = {
   gameOverMessage: document.querySelector("#game-over-message"),
   playAgain: document.querySelector("#play-again"),
   mode: document.querySelector("#game-mode"),
+  modeDescription: document.querySelector("#mode-description"),
   nextLevel: document.querySelector("#next-level"),
   southCount: document.querySelector("#south-count"),
   failureResult: document.querySelector("#failure-result"),
   failureLevel: document.querySelector("#failure-level"),
   failureMode: document.querySelector("#failure-mode"),
+  failureRegion: document.querySelector("#failure-region"),
   failureMessage: document.querySelector("#failure-message"),
   retryGame: document.querySelector("#retry-game"),
 };
@@ -67,6 +73,12 @@ let failureTimer;
 
 function currentModeName() {
   return MODE_NAMES[elements.mode.value] || "不明";
+}
+
+function updateModeDescription() {
+  const description = MODE_DESCRIPTIONS[elements.mode.value] || "";
+  elements.modeDescription.textContent = description;
+  elements.modeDescription.hidden = !description;
 }
 
 function modeData() {
@@ -265,6 +277,9 @@ function finishFailure(message, resultMessage) {
   failureTimer = window.setTimeout(() => {
     elements.failureLevel.textContent = level;
     elements.failureMode.textContent = currentModeName();
+    const regionDescription = MODE_DESCRIPTIONS[elements.mode.value] || "";
+    elements.failureRegion.textContent = regionDescription;
+    elements.failureRegion.hidden = !regionDescription;
     elements.failureMessage.textContent = resultMessage;
     elements.failureResult.hidden = false;
     elements.failureResult.scrollIntoView({
@@ -334,7 +349,10 @@ elements.choices.addEventListener("click", (event) => {
 
 elements.newGame.addEventListener("click", startGame);
 elements.playAgain.addEventListener("click", startGame);
-elements.mode.addEventListener("change", startGame);
+elements.mode.addEventListener("change", () => {
+  updateModeDescription();
+  startGame();
+});
 elements.nextLevel.addEventListener("click", () => {
   level += 1;
   choiceCount += 1;
@@ -343,4 +361,5 @@ elements.nextLevel.addEventListener("click", () => {
 });
 elements.retryGame.addEventListener("click", startGame);
 
+updateModeDescription();
 startGame();

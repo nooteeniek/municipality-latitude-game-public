@@ -114,6 +114,16 @@ main { display: grid; gap: 18px; padding-bottom: 50px; }
   font-size: .75rem;
   font-weight: 800;
 }
+.mode-description {
+  max-width: 360px;
+  color: #68736b;
+  font-size: .68rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.mode-description[hidden] {
+  display: none;
+}
 .mode-picker select {
   padding: 9px 30px 9px 10px;
   color: var(--ink);
@@ -309,6 +319,15 @@ dd { margin: 0; font-family: ui-monospace, Consolas, monospace; font-size: .78re
 .failure-mode strong {
   color: var(--ink);
 }
+.failure-region {
+  margin-bottom: 7px !important;
+  color: #68736b;
+  font-size: .72rem;
+  line-height: 1.5;
+}
+.failure-region[hidden] {
+  display: none;
+}
 .failure-result button {
   min-height: 46px;
   padding: 11px 20px;
@@ -398,6 +417,10 @@ dd { margin: 0; font-family: ui-monospace, Consolas, monospace; font-size: .78re
   .mode-picker, .new-game { grid-column: 1 / -1; }
   .mode-picker { display: grid; grid-template-columns: auto 1fr; }
   .mode-picker select { width: 100%; min-height: 44px; }
+  .mode-description {
+    grid-column: 1 / -1;
+    max-width: none;
+  }
   .score, .round-rule, .selection-progress {
     min-height: 44px;
     padding: 6px;

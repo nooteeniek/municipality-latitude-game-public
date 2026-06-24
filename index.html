@@ -15,7 +15,7 @@
     <script src="./game.js" defer></script>
   </head>
   <body>
-    <div class="version-badge" aria-label="バージョン">v1.1.2</div>
+    <div class="version-badge" aria-label="バージョン">v1.1.3</div>
     <header class="game-header">
       <div>
         <p class="eyebrow">LATITUDE CHALLENGE</p>
@@ -38,6 +38,7 @@
             <option value="honshu">本州だけ</option>
             <option value="all">全部入り</option>
           </select>
+          <small id="mode-description" class="mode-description" hidden></small>
         </label>
         <div class="score">
           <span>レベル</span>
@@ -83,6 +84,7 @@
           <p class="failure-label">RESULT</p>
           <h2>レベル <span id="failure-level"></span></h2>
           <p class="failure-mode">モード：<strong id="failure-mode"></strong></p>
+          <p id="failure-region" class="failure-region" hidden></p>
           <p id="failure-message"></p>
         </div>
         <button id="retry-game" type="button">最初から挑戦</button>
